@@ -1,15 +1,14 @@
-<%= form_for(travelday) do |f| %>
-  <% if travelday.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(travelday.errors.count, "error") %> prohibited this travelday from being saved:</h2>
+<%= form_for([@post, @post.traveldays.build]) do |f| %>
 
-      <ul>
-      <% travelday.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :budget %>
+    <%= f.number_field :budget %>
+  </div>
 
   <div class="actions">
     <%= f.submit %>

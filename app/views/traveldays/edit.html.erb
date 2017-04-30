@@ -1,6 +1,18 @@
-<h1>Editing Travelday</h1>
+<%= form_for([@post, @travelday]) do |f| %>
 
-<%= render 'form', travelday: @travelday %>
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
 
-<%= link_to 'Show', @travelday %> |
-<%= link_to 'Back', traveldays_path %>
+  <div class="field">
+    <%= f.label :budget %>
+    <%= f.number_field :budget %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  
+  <%= link_to 'Back', post_path(@post) %>
+<% end %>

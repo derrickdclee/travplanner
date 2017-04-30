@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Content</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,6 +13,7 @@
   <tbody>
     <% @traveldays.each do |travelday| %>
       <tr>
+        <td><%= travelday.content %></td>
         <td><%= link_to 'Show', travelday %></td>
         <td><%= link_to 'Edit', edit_travelday_path(travelday) %></td>
         <td><%= link_to 'Destroy', travelday, method: :delete, data: { confirm: 'Are you sure?' } %></td>

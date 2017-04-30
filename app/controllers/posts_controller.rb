@@ -1,15 +1,25 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :post_member?]
+  before_action :authenticate_user!
+  before_action :can_access?, only: [:show, :edit, :update, :destroy]
+  
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    if current_user.admin
+      @posts = Post.all
+    else
+      @posts = current_user.posts
+    end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @traveldays = Travelday.where(post_id: @post.id).order(created_at: :asc)
+    # this also works
+    # @traveldays = Travelday.where(post_id: @post).order(created_at: :asc)
+    @total_budget = total_budget?(@traveldays)
   end
 
   # GET /posts/new
@@ -24,11 +34,11 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.create!(post_params)
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to post_path(@post), notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -42,7 +52,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to post_path(@post), notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -56,7 +66,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to posts_path, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +79,25 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.fetch(:post, {})
+      # permit means that those attributes are available for mass assignment
+      # attributes not included in permit are still returned; it's just that
+      # they are not available for mass assignment
+      params.require(:post).permit(:content, :title)
+    end
+    
+    def can_access?
+      # if the user does not belong in the group AND is not admin
+      if !current_user.posts.exists?(@post.id) && !current_user.admin
+        flash[:notice] = "Not allowed!"
+        redirect_to root_path
+      end
+    end
+    
+    def total_budget? (traveldays)
+      budget = 0
+      traveldays.each do |td|
+        budget += td.budget
+      end
+      budget
     end
 end

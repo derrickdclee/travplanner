@@ -1,10 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Posts</h1>
+<% if current_user.admin %>
+  <h2>You are logged in as admin.</h2>
+<% end %>
 
 <table>
   <thead>
     <tr>
+      <th>Title</th>
+      <th>Content</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,9 +17,11 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
+        <td><%= post.title %></td>
+        <td> <%=h truncate(post.content, :length => 80) %></td>
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', post_path(post), :method => :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
