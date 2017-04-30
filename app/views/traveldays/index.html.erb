@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Traveldays</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @traveldays.each do |travelday| %>
+      <tr>
+        <td><%= link_to 'Show', travelday %></td>
+        <td><%= link_to 'Edit', edit_travelday_path(travelday) %></td>
+        <td><%= link_to 'Destroy', travelday, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Travelday', new_travelday_path %>

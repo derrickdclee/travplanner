@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :traveldays
   resources :invites
   resources :posts
   devise_for :users, controllers: { registrations: 'users/registrations' }
