@@ -6,7 +6,8 @@
     <body>
         <h1>Welcome to Travel Planner!</h1>
         <p>
-          To accept the invite, just follow <a href= '<%="travel-plan-helper.herokuapp.com#{@url}"%>'> this link</a>.
+          To accept the invite, just follow 
+          <%= link_to 'this link', "travplanner.herokuapp.com#{@url}" %>.
         </p>
         <p>Thanks for joining and have a great day!</p>
   </body>
