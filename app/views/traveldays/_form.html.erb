@@ -1,16 +1,18 @@
-<%= form_for([@post, @post.traveldays.build]) do |f| %>
-
-  <div class="field">
-    <%= f.label :content %>
-    <%= f.text_area :content %>
-  </div>
+<div class="new-travelday">
+  <%= form_for([@post, @post.traveldays.build]) do |f| %>
   
-  <div class="field">
-    <%= f.label :budget %>
-    <%= f.number_field :budget %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= f.label :content %>
+      <%= f.text_area :content %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :budget %>
+      <%= f.number_field :budget %>
+    </div>
+  
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>

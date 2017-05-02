@@ -1,13 +1,20 @@
-<h2>This trip has <%= pluralize(@traveldays.count, "travel day") %>. 
-The estimated total budget is $<%= @total_budget %>.</h2>
-
-<!-- displaying the travel days -->
-<% @traveldays.each do |td| %>
-    <p><%= td.content %></p>
-    <p>$<%= td.budget %></p>
-    <%= link_to 'Edit', edit_post_travelday_path(td.post, td) %>
-    <%= link_to 'Delete', post_travelday_path(td.post, td), method: :delete %>
-<% end %>
-
-<!-- form for adding an extra travel day -->
-<%= render 'traveldays/form' %>
+<div class="container">
+    <div class="travel-info-summary">
+        <h3>This trip has <%= pluralize(@traveldays.count, "travel day") %>. 
+        The estimated total budget is $<%= @total_budget %>.</h3>
+    </div>
+    
+    <!-- displaying the travel days -->
+    <% @traveldays.each do |td| %>
+        <div class="travelday">
+            <p>Day <%= @count.shift %>: <%= td.content %></p>
+            <p>$<%= td.budget %></p>
+            <p><%= link_to 'Edit', edit_post_travelday_path(td.post, td) %> |
+            <%= link_to 'Delete', post_travelday_path(td.post, td), 
+            method: :delete %></p>
+        </div>
+    <% end %>
+    
+    <!-- form for adding an extra travel day -->
+    <%= render 'traveldays/form' %>
+</div>

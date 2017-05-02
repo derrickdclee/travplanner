@@ -17,6 +17,7 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @traveldays = Travelday.where(post_id: @post.id).order(created_at: :asc)
+    @count = Array (1 .. @traveldays.count)
     # this also works
     # @traveldays = Travelday.where(post_id: @post).order(created_at: :asc)
     @total_budget = total_budget?(@traveldays)
