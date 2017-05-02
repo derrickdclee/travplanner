@@ -1,16 +1,15 @@
-<p id="notice"><%= notice %></p>
-
-<div class="container">
-  <p>
-    <strong>Title:</strong>
-    <%= @post.title %>
-  </p>
-  <p>
-    <strong>Content:</strong>
-    <%= @post.content %>
-  </p>
+<div class="container box">
+  <p id="notice"><%= notice %></p>
+  <div class="intro">
+    <p>
+      <strong>Destination: <%= @post.title %></strong>
+    </p>
+    <p>
+      <i>"<%= @post.content %>"</i>
+    </p>
+    <%= link_to 'Edit', edit_post_path(@post) %> |
+    <%= link_to 'Back', posts_path %>
+  </div>
+  
+  <%= render 'traveldays/display_travelday' %>
 </div>
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
-
-<%= render 'traveldays/display_travelday' %>
