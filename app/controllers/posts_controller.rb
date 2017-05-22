@@ -3,6 +3,8 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :can_access?, only: [:show, :edit, :update, :destroy]
   
+  helper_method :sort_column, :sort_direction
+  
   # GET /posts
   # GET /posts.json
   def index
@@ -11,7 +13,9 @@ class PostsController < ApplicationController
     else
       @posts = current_user.posts
     end
-  end
+    
+    @posts = @posts.order(sort_column + " " + sort_direction)
+  end 
 
   # GET /posts/1
   # GET /posts/1.json
@@ -100,5 +104,13 @@ class PostsController < ApplicationController
         budget += td.budget
       end
       budget
+    end
+    
+    def sort_column
+      Post.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    end
+    
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 end
